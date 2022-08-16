@@ -1,0 +1,25 @@
+[
+{
+    "exp": 1660216412,
+    "status":true,
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IkNhcmxvcyBSYW1pcmV6IiwicGFzc3dvcmQiOiIxMjM0IiwiZXhwIjoxNjYwMjE2NDEyfQ.iqbKRwXGh5Xq4DYpdv_sFx7vAcupPpc72XQoQ87UMHM",
+    "usuario":{
+        "id_usuario": "",
+        "username": "Carlos Ramirez"
+    }
+    
+},
+{
+    "status":false,
+    "msg":"Usuario o contraseña invalidos"
+},
+{
+    "status":true,
+    "msg":"Usuario creado correctamente"
+},
+{
+    "status":false,
+    "msg":"Usuario ya esta registrado"
+}
+]
+

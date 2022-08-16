@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  flask:
+    build:
+      context: .
+      #con esto demostramos que estamos trabajando con una imagen que esta en el mismo directorio
+    container_name: flask_pelis
+    #network_mode: bridge
+    networks:
+      - red_interna
+    ports:
+      - "3050:3050"
+    stdin_open: true
+    tty: true
+    #links:
+    #  - postgres:postgres
+    links:
+      - postgres
+    #depends_on:
+    #  - postgres
+  #acceder al contenedor y darle una interaccion al contenedor
+  postgres:
+    image: postgres:14.4-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - DATABASE_HOST=localhost
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=python_flask
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - red_interna
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      # se copia el script para crear la BD y debe estar bien escrito y defindo, para que docker crea las tablas.
+      - ./pelis.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+      # PGAdmin: Esta aplicación permitirá revisar y agregar información
+      # posteriormente puede ser retirada
+      # es posible configurar y se disponibiliza en el puerto 80
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+    networks:
+      - red_interna
+
+networks:
+  red_interna:
+    driver: bridge
